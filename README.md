@@ -17,7 +17,9 @@ This directory contains the components of CS-Fix.
 
 1. Install [Pipenv](https://pipenv.pypa.io/en/latest/installation.html)
 
-2. Create an `.env` file in this directory and configure it (see [`.sampleenv`](./.sampleenv))
+2. Install dependencies (including development dependencies): `pipenv sync --dev`
+
+3. Create an `.env` file in this directory and configure it (see [`.sampleenv`](./.sampleenv))
 
 ### Running
 
