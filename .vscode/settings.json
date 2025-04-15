@@ -1,0 +1,14 @@
+{
+	"files.insertFinalNewline": true,
+	"files.trimFinalNewlines": true,
+	"[python]": {
+		"editor.defaultFormatter": "charliermarsh.ruff",
+		"editor.formatOnSave": true,
+		"editor.codeActionsOnSave": {
+			"source.fixAll": "explicit",
+			"source.organizeImports": "explicit"
+		},
+		"editor.rulers": [88]
+	},
+	"mypy.runUsingActiveInterpreter": true
+}
