@@ -30,6 +30,7 @@ jobs:
         run: |
           pip install --upgrade pip
           pip install --user pipenv
+          pipenv sync
 
       - name: Run code quality checks
         run: |
