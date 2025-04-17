@@ -21,21 +21,32 @@ This directory contains the components of CS-Fix.
 
 3. Create an `.env` file in the project root directory and configure it (see [`.sampleenv`](./.sampleenv))
 
+### Activating the virtual environment
+
+Every time you want to run or develop the project, you have to activate the virtual environment created by pipenv:
+
+```sh
+pipenv shell
+```
+
 ### Running
 
-While in the project root directory, run [`scripts/run.sh`](./scripts/run.sh).
+While in the virtual environment, do:
+```sh
+python -m csfix <arguments>
+```
 
 ### Linting
 
-To lint the code with Ruff and Mypy, while in the project root directory, run [`scripts/lint.sh`](./scripts/lint.sh).
+There are linters which check and format your code automatically. To run them, while in the virtual environment, run the script [`./scripts/lint.sh`](./scripts/lint.sh).
 
 ### Cleaning up
 
-To clean up generated files, while in the project root directory, run [`scripts/clean.sh`](./scripts/clean.sh).
+To clean up generated files, while in the project root directory, run [`./scripts/clean.sh`](./scripts/clean.sh).
 
 ## Development
 
-For installing/managing dependencies, `pipenv` instead of `pip`. Pipenv automatically manages dependencies and virtual environments, so you don't have to create a virtual environment either.
+For installing/managing dependencies, use `pipenv` instead of `pip`. Pipenv automatically manages dependencies and virtual environments, so you don't have to create a virtual environment either.
 
 If you get errors from Pylance, make sure you are using the correct Python interpreter:
 1. Open command palette (`ctrl + shift + P`)

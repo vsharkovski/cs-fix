@@ -10,5 +10,5 @@ class OpenAIClient(LLMClient):
     def __init__(self, api_key: str, model: str):
         pass
 
-    def get_completion(self, messages: list[dict[str, str]]):
+    def get_completion(self, messages: list[dict[str, str]]) -> str:
         return ""
