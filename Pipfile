@@ -4,6 +4,8 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+prettytable = "*"
+python-dotenv = "*"
 
 [dev-packages]
 ruff = "*"
