@@ -43,7 +43,7 @@ class ProblemRepository(Repository):
                 file TEXT,
                 location TEXT,
                 description TEXT,
-                discovery_time INTEGER,
+                discovery_time TIMESTAMP,
                 PRIMARY KEY (tool_name, file, location, description)
             );
             COMMIT;
