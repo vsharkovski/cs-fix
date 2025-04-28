@@ -12,7 +12,7 @@ class ScanStatusRepository(Repository):
             CREATE TABLE IF NOT EXISTS scan_statuses (
                 file TEXT,
                 tool_name VARCHAR(16),
-                scan_time INTEGER,
+                scan_time TIMESTAMP,
                 problem_count INTEGER,
                 PRIMARY KEY (file, tool_name)
             );
