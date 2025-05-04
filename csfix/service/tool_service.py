@@ -4,6 +4,7 @@ from csfix.tools.tool_details import TOOLS, ToolDetails
 
 class ToolService:
     def __init__(self):
+        self._tools = TOOLS
         self._tool_code_to_tool = {tool.code.lower(): tool for tool in TOOLS}
 
     def get_tool_by_code(self, code: str) -> ToolDetails:
@@ -12,3 +13,6 @@ class ToolService:
         if not tool:
             raise ToolNotFoundError(f"Unrecognized tool code: {code_lower}")
         return tool
+
+    def get_all_tools(self) -> list[ToolDetails]:
+        return self._tools

@@ -9,7 +9,7 @@ class SuggestionService:
     def __init__(self, llm_client: LLMClient):
         self._llm_client = llm_client
 
-    def get_suggestion(self, file_content: str, problem: Problem) -> str:
+    def get_suggestions(self, file_content: str, problems: list[Problem]) -> str:
         # Create a prompt for the LLM
         messages = [
             {
@@ -23,10 +23,8 @@ class SuggestionService:
             {
                 "role": "user",
                 "content": (
-                    f"Please help me fix the following code issue:\n\n"
-                    f"Problem: {problem.description}\n"
-                    f"Location: {problem.location}\n"
-                    f"Tool: {problem.tool_name}\n\n"
+                    f"Please help me fix the following code issues:\n\n"
+                    f"{self._join_problems_for_prompt(problems)}\n"
                     f"Here's the file content:\n```python\n{file_content}\n```\n\n"
                     "Please provide a specific suggestion on how to fix this issue. "
                     "Include the exact code changes needed."
@@ -38,51 +36,39 @@ class SuggestionService:
         suggestion = self._llm_client.get_completion(messages)
         return suggestion
 
-    def get_and_apply_fix(self, file_path: Path, problem: Problem) -> tuple[bool, str]:
-        """Get suggestion and apply it to the file
+    def get_and_apply_fixes(self, file_path: Path, problems: list[Problem]) -> None:
+        """Get suggestions and apply it to the file"""
+        # Read file content
+        file_content = file_path.read_text()
 
-        Returns:
-            tuple: (success_flag, message)
-        """
-        try:
-            # Read file content
-            file_content = file_path.read_text()
+        # Get fix suggestion
+        messages = [
+            {
+                "role": "system",
+                "content": (
+                    "You are a coding assistant that fixes code problems. Provide ONLY the fixed code. "
+                    "Do not include any explanations, markdown formatting, or code blocks. "
+                    "Return ONLY the complete fixed file content."
+                ),
+            },
+            {
+                "role": "user",
+                "content": (
+                    f"Fix the following code issues:\n\n"
+                    f"{self._join_problems_for_prompt(problems)}\n"
+                    f"Here's the file content:\n{file_content}\n\n"
+                    "Return ONLY the complete fixed file content. No explanation needed."
+                ),
+            },
+        ]
 
-            # Get fix suggestion
-            messages = [
-                {
-                    "role": "system",
-                    "content": (
-                        "You are a coding assistant that fixes code problems. Provide ONLY the fixed code. "
-                        "Do not include any explanations, markdown formatting, or code blocks. "
-                        "Return ONLY the complete fixed file content."
-                    ),
-                },
-                {
-                    "role": "user",
-                    "content": (
-                        f"Fix the following code issue:\n\n"
-                        f"Problem: {problem.description}\n"
-                        f"Location: {problem.location}\n"
-                        f"Tool: {problem.tool_name}\n\n"
-                        f"Here's the file content:\n{file_content}\n\n"
-                        "Return ONLY the complete fixed file content. No explanation needed."
-                    ),
-                },
-            ]
+        fixed_content = self._llm_client.get_completion(messages)
 
-            fixed_content = self._llm_client.get_completion(messages)
+        # Clean any possible code block formatting if the LLM added it
+        fixed_content = self._clean_code_blocks(fixed_content)
 
-            # Clean any possible code block formatting if the LLM added it
-            fixed_content = self._clean_code_blocks(fixed_content)
-
-            # Write the fixed content back to the file
-            file_path.write_text(fixed_content)
-
-            return True, f"Fixed {problem.description} at {problem.location}"
-
-        except Exception as e:
-            return False, f"Error applying fix: {str(e)}"
+        # Write the fixed content back to the file
+        file_path.write_text(fixed_content)
 
     def _clean_code_blocks(self, content: str) -> str:
         """Remove markdown code blocks if present"""
@@ -90,3 +76,7 @@ class SuggestionService:
         content = re.sub(r"^```python\s*\n", "", content)
         content = re.sub(r"\n```\s*$", "", content)
         return content
+
+    def _join_problems_for_prompt(self, problems: list[Problem]) -> str:
+        str_list = [f"Problem: {problem.description}" for problem in problems]
+        return "\n".join(str_list)

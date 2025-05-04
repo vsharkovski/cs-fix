@@ -14,11 +14,14 @@ from csfix.data.problem_repository import ProblemRepository
 from csfix.data.scan_status_repository import ScanStatusRepository
 from csfix.data.sqlite_database import SQLiteDatabase
 from csfix.llm.groq_client import GroqClient
+from csfix.model.problem import Problem
 from csfix.service.problem_service import ProblemService
 from csfix.service.scan_service import ScanService
 from csfix.service.suggestion_service import SuggestionService
 from csfix.service.tool_service import ToolService
 from csfix.util import get_env_var_or_throw
+
+logger = logging.getLogger(__name__)
 
 
 class Application:
@@ -68,60 +71,57 @@ class Application:
         file_path = file_path.resolve()
         problems = self._problem_service.get_problems_for_file(file_path)
         if not problems:
-            print(f"No problems found for file: {file_path}")
+            logger.info("No problems found for file: %s", file_path)
             return
+
+        logger.info(
+            "Problems for %s:\n%s", file_path, self._prettify_problems(problems)
+        )
 
         # Get file content
         file_content = file_path.read_text()
 
-        # Get suggestions from LLM for each problem
-        for problem in problems:
-            print(f"\nProblem at {problem.location}: {problem.description}")
-            print("Suggested fix:")
-            try:
-                suggestion = self._suggestion_service.get_suggestion(
-                    file_content, problem
-                )
-                print(suggestion)
-            except Exception as e:
-                print(f"Error getting suggestion: {str(e)}")
-            print("-" * 80)
+        # Get suggestions from LLM
+        try:
+            suggestions = self._suggestion_service.get_suggestions(
+                file_content, problems
+            )
+            logger.info("Suggested fixes for %s:\n%s", file_path, suggestions)
+        except Exception as e:
+            logger.error("Error getting suggestion: %s", e)
 
     def apply_fixes(self, file_path: Path) -> None:
         """Apply fixes to a file using LLM suggestions"""
         problems = self._problem_service.get_problems_for_file(file_path)
         if not problems:
-            print(f"No problems found for file: {file_path}")
+            logger.info("No problems found for file: %s", file_path)
             return
 
-        print(f"Applying fixes to {file_path}...")
+        logger.info("Applying fixes to %s...", file_path)
 
-        # Apply fixes for each problem
-        for problem in problems:
-            print(f"Fixing: {problem.description} at {problem.location}")
-            success, message = self._suggestion_service.get_and_apply_fix(
-                file_path, problem
-            )
-
-            if success:
-                print(f"✓ {message}")
-            else:
-                print(f"✗ {message}")
+        try:
+            self._suggestion_service.get_and_apply_fix(file_path, problems)
+            logger.info("Successfully applied fixes")
+        except Exception as e:
+            logger.error("Error applying fix: %s", e)
 
         # Re-scan the file to check if problems were fixed
-        print("\nRe-scanning file to verify fixes...")
-        for tool_code in ["ruff"]:  # Add other tools as needed
+        logger.info("Re-scanning file to verify fixes...")
+        tools_to_use = self._tool_service.get_all_tools()
+        for tool_code in tools_to_use:
             tool = self._tool_service.get_tool_by_code(tool_code)
             self._scan_service._scan(file_path, tool)
 
         # Check if there are still problems
         remaining_problems = self._problem_service.get_problems_for_file(file_path)
         if remaining_problems:
-            print(f"\nRemaining problems ({len(remaining_problems)}):")
-            for problem in remaining_problems:
-                print(f"- {problem.description} at {problem.location}")
+            logger.info(
+                "Remaining problems (%s):\n%s",
+                len(remaining_problems),
+                self._prettify_problems(remaining_problems),
+            )
         else:
-            print("\nAll problems fixed successfully!")
+            logger.info("All problems fixed successfully!")
 
     def _initialize_data_directory(self, data_parent_directory: Path) -> None:
         if data_parent_directory.exists() and not data_parent_directory.is_dir():
@@ -138,3 +138,9 @@ class Application:
             )
 
         data_directory.mkdir(parents=True, exist_ok=True)
+
+    def _prettify_problems(self, problems: list[Problem]) -> str:
+        str_list = [
+            f"- {problem.description} at {problem.location}" for problem in problems
+        ]
+        return "\n".join(str_list)
