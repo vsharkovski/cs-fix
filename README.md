@@ -8,7 +8,7 @@ This directory contains the components of CS-Fix.
 
 ## Pre-requisites
 
-* Python 3.10 or higher
+* Python 3.10. Other Python versions are not supported currently.
 * [Pipenv](https://pipenv.pypa.io/en/latest/installation.html)
 
 ## Running Locally
@@ -34,6 +34,14 @@ pipenv shell
 While in the virtual environment, do:
 ```sh
 python -m csfix <arguments>
+```
+
+For example, to get help:
+```sh
+python -m csfix -h
+python -m csfix scan -h
+python -m csfix show -h
+python -m csfix suggest -h
 ```
 
 ### Linting
