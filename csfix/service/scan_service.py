@@ -26,11 +26,11 @@ class ScanService:
         self._scan_status_repository = scan_status_repository
 
     def scan(self, directory: Path, tool_codes: list[str]) -> None:
-        logging.info(f"Scanning directory {directory} with tools {tool_codes}")
+        logger.info(f"Scanning directory {directory} with tools {tool_codes}")
         try:
             tools = [self._tool_service.get_tool_by_code(code) for code in tool_codes]
         except ToolNotFoundError as e:
-            print("Error:", e, file=sys.stderr)
+            logger.error(e)
             sys.exit(1)
 
         files = glob_files_resolved(directory, "**/*.py")
