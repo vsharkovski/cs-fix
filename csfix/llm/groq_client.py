@@ -5,22 +5,20 @@ from groq import Groq
 
 from csfix.llm.llm_client import LLMClient
 
-# Disable debug logs from http libraries
-logging.getLogger("httpx").setLevel(logging.WARNING)
-logging.getLogger("httpcore").setLevel(logging.WARNING)
+logger = logging.getLogger(__name__)
 
 
 class GroqClient(LLMClient):
     def __init__(self, api_key: str, model: str):
         # Check if API key starts with "gsk_" which is the Groq key format
         if not api_key.startswith("gsk_"):
-            print(
+            logger.warning(
                 "Warning: API key doesn't have expected Groq format (should start with 'gsk_')"
             )
 
         self.groq = Groq(api_key=api_key)
         self.model = model
-        print(f"Groq client initialized with model: {model}")
+        logger.debug(f"Groq client initialized with model: {model}")
 
     def get_completion(self, messages: list[dict[str, str]]) -> str:
         try:
@@ -31,7 +29,7 @@ class GroqClient(LLMClient):
         except Exception as e:
             # Check if API key is in environment directly as a backup
             if "Invalid API Key" in str(e) and os.environ.get("GROQ_API_KEY"):
-                print("Trying fallback to GROQ_API_KEY environment variable...")
+                logger.debug("Trying fallback to GROQ_API_KEY environment variable...")
                 try:
                     backup_client = Groq(api_key=os.environ["GROQ_API_KEY"])
                     response = backup_client.chat.completions.create(

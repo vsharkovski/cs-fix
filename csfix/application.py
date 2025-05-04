@@ -13,8 +13,6 @@ from csfix.constants import (
 from csfix.data.problem_repository import ProblemRepository
 from csfix.data.scan_status_repository import ScanStatusRepository
 from csfix.data.sqlite_database import SQLiteDatabase
-
-# from csfix.llm.openai_client import OpenAIClient
 from csfix.llm.groq_client import GroqClient
 from csfix.service.problem_service import ProblemService
 from csfix.service.scan_service import ScanService
@@ -25,7 +23,12 @@ from csfix.util import get_env_var_or_throw
 
 class Application:
     def __init__(self):
+        # Logging configuration
         logging.basicConfig(level=logging.INFO)
+
+        # Disable debug logs from http libraries
+        logging.getLogger("httpx").setLevel(logging.WARNING)
+        logging.getLogger("httpcore").setLevel(logging.WARNING)
 
         load_dotenv()
 
@@ -51,8 +54,6 @@ class Application:
 
         api_key = get_env_var_or_throw(ENV_GROQ_API_KEY)
         api_model = get_env_var_or_throw(ENV_GROQ_MODEL)
-        print(f"API key loaded (first 4 chars): {api_key[:4]}...")
-        print(f"API model: {api_model}")
         llm_client = GroqClient(api_key, api_model)
         self._suggestion_service = SuggestionService(llm_client)
 
