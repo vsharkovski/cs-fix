@@ -7,10 +7,8 @@ name = "pypi"
 prettytable = "*"
 python-dotenv = "*"
 mypy = "*"
-
-[dev-packages]
+groq = "*"
 ruff = "*"
-mypy = "*"
 
 [requires]
 python_version = "3.10"

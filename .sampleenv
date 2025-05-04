@@ -1,6 +1,6 @@
 # Directory to place the CSFix data folder in.
 DATA_DIRECTORY=/home/vlatko/projects/spa/cs-fix/
 
-# OpenAI parameters.
-OPENAI_API_KEY=super-secret-api-key
-OPENAI_MODEL=o4-mini-2025-04-16
+# GroqAPI parameters
+GROQ_API_KEY=super-secret-api-key
+GROQ_MODEL=llama-3.3-70b-versatile

@@ -25,7 +25,7 @@ LINE_RE = re.compile(
 class MypyRunner(ToolRunner):
     def run(self, file: Path) -> list[Problem]:
         # Execute mypy
-        cmd = ["mypy", str(file)]
+        cmd = ["mypy", "--follow-imports=skip", str(file)]
         result = subprocess.run(cmd, text=True, capture_output=True)
         output = result.stdout or ""
 

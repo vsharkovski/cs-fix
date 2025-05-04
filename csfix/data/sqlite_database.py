@@ -34,7 +34,7 @@ class SQLiteDatabase:
             self._connection.close()
 
     def connect(self) -> None:
-        logger.info(f"Using/creating SQLite database at: {self._db_path}")
+        logger.info("Using/creating SQLite database at: %s", self._db_path)
         self._connection = sqlite3.connect(
             str(self._db_path), detect_types=sqlite3.PARSE_DECLTYPES
         )
