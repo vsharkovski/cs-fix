@@ -48,3 +48,6 @@ class ProblemService:
 
     def insert_problems(self, problems: list[Problem]) -> None:
         self._problem_repository.insert_many(problems)
+
+    def get_problems_for_file(self, file: Path) -> list[Problem]:
+        return self._problem_repository.get_by_file(str(file))

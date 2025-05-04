@@ -2,6 +2,7 @@ import logging
 import sys
 from datetime import datetime
 from pathlib import Path
+
 from csfix.data.scan_status_repository import ScanStatusRepository
 from csfix.exceptions import ToolNotFoundError
 from csfix.model.scan_status import ScanStatus

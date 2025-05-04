@@ -29,6 +29,12 @@ def suggest_subcommand(args: argparse.Namespace):
     application.get_suggestions(file_path)
 
 
+def fix_subcommand(args: argparse.Namespace):
+    file_path = Path(args.file)
+    application = Application()
+    application.apply_fixes(file_path)
+
+
 def tools_subcommand(args: argparse.Namespace):
     print("Available tools:")
     for tool in TOOLS:
@@ -67,6 +73,13 @@ def main(args: Sequence[str] | None = None):
     )
     suggest_parser.add_argument("file", help="Target file")
     suggest_parser.set_defaults(func=suggest_subcommand)
+
+    # fix subcommand
+    fix_parser = subparsers.add_parser(
+        "fix", help="Automatically apply fixes to a file"
+    )
+    fix_parser.add_argument("file", help="Target file")
+    fix_parser.set_defaults(func=fix_subcommand)
 
     # tools subcommand
     tools_parser = subparsers.add_parser("tools", help="Show tools information")
