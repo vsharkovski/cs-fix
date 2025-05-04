@@ -18,7 +18,7 @@ class GroqClient(LLMClient):
 
         self.groq = Groq(api_key=api_key)
         self.model = model
-        logger.debug(f"Groq client initialized with model: {model}")
+        logger.debug("Groq client initialized with model: %s", model)
 
     def get_completion(self, messages: list[dict[str, str]]) -> str:
         try:

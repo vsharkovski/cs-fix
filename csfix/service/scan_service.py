@@ -26,7 +26,7 @@ class ScanService:
         self._scan_status_repository = scan_status_repository
 
     def scan(self, directory: Path, tool_codes: list[str]) -> None:
-        logger.info(f"Scanning directory {directory} with tools {tool_codes}")
+        logger.info("Scanning directory %s with tools %s", directory, tool_codes)
         try:
             tools = [self._tool_service.get_tool_by_code(code) for code in tool_codes]
         except ToolNotFoundError as e:
@@ -67,7 +67,7 @@ class ScanService:
 
     def _scan(self, file: Path, tool: ToolDetails) -> None:
         # Run the tool on the file
-        logger.info(f"Scanning with tool {tool.name} on file: {file}")
+        logger.info("Scanning with tool %s on file: %s", tool.name, file)
         scan_time = datetime.now()
 
         runner = tool.create_runner()
