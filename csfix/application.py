@@ -65,6 +65,7 @@ class Application:
         self._problem_service.show_problems(directory)
 
     def get_suggestions(self, file_path: Path) -> None:
+        file_path = file_path.resolve()
         problems = self._problem_service.get_problems_for_file(file_path)
         if not problems:
             print(f"No problems found for file: {file_path}")
