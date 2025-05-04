@@ -24,10 +24,10 @@ TOOLS = [
         code="ruff",
         runner_type=RuffRunner,
     ),
-     ToolDetails(
+    ToolDetails(
         name="mypy",
         description="Python Type checking",
         code="mypy",
         runner_type=MypyRunner,
-    )
+    ),
 ]

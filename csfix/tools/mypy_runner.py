@@ -6,7 +6,6 @@ from pathlib import Path
 from csfix.model.problem import Problem
 from csfix.tools.tool_runner import ToolRunner
 
-
 LINE_RE = re.compile(
     r"""
     ^
@@ -22,15 +21,14 @@ LINE_RE = re.compile(
     re.VERBOSE,
 )
 
-class MypyRunner(ToolRunner):
 
-    name = "mypy"
+class MypyRunner(ToolRunner):
     def run(self, file: Path) -> list[Problem]:
         # Execute mypy
         cmd = ["mypy", str(file)]
         result = subprocess.run(cmd, text=True, capture_output=True)
         output = result.stdout or ""
-        print(output)
+
         problems: list[Problem] = []
         for raw in output.splitlines():
             match = LINE_RE.match(raw)
