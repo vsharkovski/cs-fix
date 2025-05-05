@@ -44,15 +44,17 @@ python -m csfix show -h
 python -m csfix suggest -h
 ```
 
-### Linting
-
-There are linters which check and format your code automatically. To run them, while in the virtual environment, run the script [`./scripts/lint.sh`](./scripts/lint.sh).
-
 ### Cleaning up
 
 To clean up generated files, while in the project root directory, run [`./scripts/clean.sh`](./scripts/clean.sh).
 
+## Reproducing experiments
+
+TODO
+
 ## Development
+
+### Dependencies
 
 For installing/managing dependencies, use `pipenv` instead of `pip`. Pipenv automatically manages dependencies and virtual environments, so you don't have to create a virtual environment either.
 
@@ -60,3 +62,7 @@ If you get errors from Pylance, make sure you are using the correct Python inter
 1. Open command palette (`ctrl + shift + P`)
 2. Type `Python: Select Interpreter`
 3. Select the interpreter created by Pipenv. It should look something like `Python 3.10.12 ('cs-fix'VL8dbg2y': Pipenv)`.
+
+### Linting
+
+There are linters which check and format your code automatically. To run them, while in the virtual environment, run the script [`./scripts/lint.sh`](./scripts/lint.sh).

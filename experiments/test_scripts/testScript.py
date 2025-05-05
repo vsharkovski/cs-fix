@@ -3,6 +3,7 @@ import sqlite3
 import subprocess
 import sys
 import time
+from pathlib import Path
 
 # Directory to scan
 # This variable can change depending on the directory you want to scan.
@@ -15,7 +16,17 @@ def run_csfix_scan(output_file):
     """Run CS-Fix scan and save output to a file."""
     with open(output_file, "w") as f:
         subprocess.run(
-            ["pipenv", "run", "python", "-m", "csfix", "scan", "ruff", TARGET_DIR],
+            [
+                "pipenv",
+                "run",
+                "python",
+                "-m",
+                "csfix",
+                "scan",
+                "ruff",
+                "mypy",
+                TARGET_DIR,
+            ],
             stdout=f,
             stderr=subprocess.STDOUT,
             check=True,
@@ -98,9 +109,14 @@ def main():
     if os.path.exists(".csfix_data"):
         subprocess.run(["rm", "-rf", ".csfix_data"])
 
+    results_path = Path("results")
+    results_path.mkdir(parents=True, exist_ok=True)
+    before_path = results_path / "before.txt"
+    after_path = results_path / "after.txt"
+
     print("Running initial scan...")
     start_scan = time.time()
-    run_csfix_scan("before.txt")
+    run_csfix_scan(str(before_path))
     end_scan = time.time()
     print(f"SPA Tool Runtime: {end_scan - start_scan:.2f} seconds")
 
@@ -112,7 +128,7 @@ def main():
     auto_apply_fixes()
 
     print("Running scan after fixes...")
-    run_csfix_scan("after.txt")
+    run_csfix_scan(str(after_path))
     print("\nRunning show command after fixes...")
     show_errors()
     print_problems_count()
@@ -122,8 +138,8 @@ def main():
         [
             sys.executable,
             "test_scripts/calculate_metrics.py",
-            "before.txt",
-            "after.txt",
+            str(before_path),
+            str(after_path),
         ],
         check=True,
     )
