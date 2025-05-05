@@ -1,0 +1,25 @@
+Loading .env environment variables...
+Courtesy Notice:
+Pipenv found itself running within a virtual environment,  so it will automatically use that environment, instead of  creating its own for any project. You can set
+PIPENV_IGNORE_VIRTUALENVS=1 to force pipenv to ignore that environment and create  its own instead.
+You can set PIPENV_VERBOSITY=-1 to suppress this warning.
+INFO:csfix.data.sqlite_database:Using/creating SQLite database at: /Users/kayesuallen/Documents/spa/cs-fix/.csfix_data/data.sqlite
+INFO:csfix.service.scan_service:Scanning directory tests with tools ['ruff']
+INFO:csfix.service.scan_service:Scanning with tool Ruff on file: /Users/kayesuallen/Documents/spa/cs-fix/tests/buggy_test_project/buggy_file.py
+INFO:csfix.service.scan_service:Scanning with tool Ruff on file: /Users/kayesuallen/Documents/spa/cs-fix/tests/buggy_test_project/utils.py
+INFO:csfix.service.scan_service:Scanning with tool Ruff on file: /Users/kayesuallen/Documents/spa/cs-fix/tests/buggy_test_project/main.py
+INFO:csfix.service.scan_service:Scanning with tool Ruff on file: /Users/kayesuallen/Documents/spa/cs-fix/tests/Python_new/data_structures/4_funciones_listas2.py
+INFO:csfix.service.scan_service:Scanning with tool Ruff on file: /Users/kayesuallen/Documents/spa/cs-fix/tests/Python_new/data_structures/multiplica.py
+INFO:csfix.service.scan_service:Scanning with tool Ruff on file: /Users/kayesuallen/Documents/spa/cs-fix/tests/Python_new/data_structures/inventario2.py
+INFO:csfix.service.scan_service:Scanning with tool Ruff on file: /Users/kayesuallen/Documents/spa/cs-fix/tests/Python_new/functional_programming/4_funcional.py
+INFO:csfix.service.scan_service:Scanning with tool Ruff on file: /Users/kayesuallen/Documents/spa/cs-fix/tests/Python_new/graphing/9_pie.py
+INFO:csfix.service.scan_service:Scanning with tool Ruff on file: /Users/kayesuallen/Documents/spa/cs-fix/tests/Python_new/graphing/11_bar_3D.py
+INFO:csfix.service.scan_service:Scanning with tool Ruff on file: /Users/kayesuallen/Documents/spa/cs-fix/tests/Python_new/graphing/10_vector_3D.py
+INFO:csfix.service.scan_service:Scanning with tool Ruff on file: /Users/kayesuallen/Documents/spa/cs-fix/tests/Python_new/graphing/12_write_excel.py
+INFO:csfix.service.scan_service:Scanning with tool Ruff on file: /Users/kayesuallen/Documents/spa/cs-fix/tests/Python_new/files/6_read.py
+INFO:csfix.service.scan_service:Scanning with tool Ruff on file: /Users/kayesuallen/Documents/spa/cs-fix/tests/Python_new/files/test.py
+INFO:csfix.service.scan_service:Scanning with tool Ruff on file: /Users/kayesuallen/Documents/spa/cs-fix/tests/Python_new/files/3_try-catch.py
+INFO:csfix.service.scan_service:Scanning with tool Ruff on file: /Users/kayesuallen/Documents/spa/cs-fix/tests/Python_new/files/4_try-catch-finally.py
+INFO:csfix.service.scan_service:Scanning with tool Ruff on file: /Users/kayesuallen/Documents/spa/cs-fix/tests/buggy-python/snippets/io.py
+INFO:csfix.service.scan_service:Scanning with tool Ruff on file: /Users/kayesuallen/Documents/spa/cs-fix/tests/buggy-python/snippets/__init__.py
+INFO:csfix.service.scan_service:Scanning with tool Ruff on file: /Users/kayesuallen/Documents/spa/cs-fix/tests/buggy-python/snippets/loop.py
