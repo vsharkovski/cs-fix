@@ -100,7 +100,6 @@ class Application:
         logger.info("Applying fixes to %s...", file_path)
 
         try:
-            # Changed method name from get_and_apply_fix to get_and_apply_fixes
             self._suggestion_service.get_and_apply_fixes(file_path, problems)
             logger.info("Successfully applied fixes")
         except Exception as e:
@@ -109,7 +108,6 @@ class Application:
         # Re-scan the file to check if problems were fixed
         logger.info("Re-scanning file to verify fixes...")
         tools_to_use = self._tool_service.get_all_tools()
-        # Instead of iterating over tool codes, iterate over tool objects directly:
         for tool in tools_to_use:
             self._scan_service._scan(file_path, tool)
 

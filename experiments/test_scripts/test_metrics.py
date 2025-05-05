@@ -2,12 +2,11 @@ import sys
 import time
 from pathlib import Path
 
+from csfix.application import Application
+
 # Add project root to sys.path
 project_root = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(project_root))
-
-
-from csfix.application import Application
 
 
 def main() -> None:
