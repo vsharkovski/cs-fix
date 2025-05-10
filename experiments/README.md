@@ -17,7 +17,15 @@ In addition to external repositories, we use three test folders:
 
 These folders are included in this repository under the `tests/` directory and were used to produce the results in the paper.
 
-### 3. Running the Experiments
+### 3. Running Experiments using Test Scripts
+
+You can run `test_metrics.py` to automate and replicate the evaluation process. For example:
+
+```sh
+python test_metrics.py
+```
+
+### 4. Test with more repositories for functionalities of csFix
 
 Ensure your `tests/` folder contains only the three folders mentioned above (and any cloned repositories if used).
 
@@ -53,10 +61,5 @@ For help on available commands:
 python -m csfix -h
 ```
 
-### 4. Using Test Scripts
-
-You can also run `test_metrics.py` to automate and replicate the evaluation process. For example:
-
-```sh
-python test_metrics.py
-```
+Note: When you apply the fixes, the entire file is updated and it would require you to recreate the errors to be able to rrun the exoeriments again.
+For that clone this repository if you want rerun the experiments: https://github.com/allenkaykay12/SPA_tests.git

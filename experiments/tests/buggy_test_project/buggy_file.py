@@ -1,5 +1,3 @@
-# sample_buggy.py
-
 import os, sys
 
 
