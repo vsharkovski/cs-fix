@@ -50,7 +50,7 @@ To clean up generated files, while in the project root directory, run [`./script
 
 ## Reproducing experiments
 
-TODO
+See [`experiments/README.md`](./experiments/README.md).
 
 ## Development
 
