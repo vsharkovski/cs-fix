@@ -1,1 +1,6 @@
+# Ignore test data except README
+tests/*
+!tests/README.md
+
+# Ignore generated results
 results/

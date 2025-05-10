@@ -8,14 +8,7 @@ Follow instructions in the [root README](../README.md) for setup, including Pipe
 
 ### 2. Test Directory Setup
 
-**Our own test files:**  
-In addition to external repositories, we use three test folders:
-
-- `tests/buggy_test_project`, which we created ourselves
-- `tests/buggy-python`, ???
-- `tests/Python-new`, ???
-
-These folders are included in this repository under the `tests/` directory and were used to produce the results in the paper.
+To obtain the test data used to produce the results in the paper, following the instructions in the [tests README](./tests/README.md).
 
 ### 3. Running Experiments using Test Scripts
 
@@ -61,5 +54,4 @@ For help on available commands:
 python -m csfix -h
 ```
 
-Note: When you apply the fixes, the entire file is updated and it would require you to recreate the errors to be able to rrun the exoeriments again.
-For that clone this repository if you want rerun the experiments: https://github.com/allenkaykay12/SPA_tests.git
+Note: When you apply the fixes, the entire file is updated and it would require you to recreate the errors (i.e. reset the files) to be able to run the experiments again.
